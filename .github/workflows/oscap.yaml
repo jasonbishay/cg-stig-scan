@@ -48,4 +48,4 @@ jobs:
             /usr/share/xml/scap/ssg/content/ssg-chainguard-gpos-ds.xml
           _END_DOCKER_RUN
           echo "Exit code: $?"
-          cat results.xml
+          #cat results.xml
