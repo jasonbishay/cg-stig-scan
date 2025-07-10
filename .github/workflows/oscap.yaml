@@ -4,13 +4,13 @@ on:
 
 jobs:
   stig-scan:
-    name: OSCAP STIG Scan of Chainguard Image
+    name: OSCAP STIG Scan
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write # to push the updates
-      pull-requests: write # to open Pull requests
-      id-token: write # used to sign the commits using gitsign
+    #permissions:
+      # contents: write # to push the updates
+      # pull-requests: write # to open Pull requests
+      # id-token: write # used to sign the commits using gitsign
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -59,5 +59,5 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
-          name: stig-scan-results.zip
+          name: stig-scan-results
           path: ./out/          
