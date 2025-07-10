@@ -7,8 +7,8 @@ jobs:
     name: OSCAP STIG Scan
     runs-on: ubuntu-latest
 
-    #permissions:
-      # contents: write # to push the updates
+    permissions:
+      contents: write # to push the updates
       # pull-requests: write # to open Pull requests
       # id-token: write # used to sign the commits using gitsign
     steps:
