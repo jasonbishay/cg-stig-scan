@@ -4,7 +4,7 @@ on:
 
 jobs:
   stig-scan:
-    name: OSCAP STIG Scan
+    name: OSCAP STIG Scan of Chainguard Image
     runs-on: ubuntu-latest
 
     permissions:
@@ -29,13 +29,14 @@ jobs:
         uses: docker/build-push-action@v6.14.0
         id: build-and-push
         with:
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ghcr.io/jasonbishay/stig-example/stig-scan-example:latest      
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: stig-scan-example:latest-temp     
       - name: Run STIG Scan
         run: |
           # run the target image
-          docker run --name target -d ghcr.io/jasonbishay/stig-example/stig-scan-example:latest tail -f /dev/null
+          docker run --name target -d stig-scan-example:latest-temp tail -f /dev/null
           docker run -i --rm -u 0:0 --pid=host \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v $(pwd)/out:/out \
@@ -48,6 +49,12 @@ jobs:
             /usr/share/xml/scap/ssg/content/ssg-chainguard-gpos-ds.xml
           _END_DOCKER_RUN
           echo "Exit code: $?"
+      - name: Rebuild and Push (after scan passes)
+        uses: docker/build-push-action@v6.14.0
+        with:
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/jasonbishay/stig-example/stig-scan-example:latest
       - name: Upload Scan Results
         uses: actions/upload-artifact@v4
         if: ${{ always() }}
