@@ -9,8 +9,8 @@ jobs:
 
     permissions:
       contents: write # to push the updates
-      # pull-requests: write # to open Pull requests
-      # id-token: write # used to sign the commits using gitsign
+      pull-requests: write # to open Pull requests
+      id-token: write # used to sign the commits using gitsign
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
