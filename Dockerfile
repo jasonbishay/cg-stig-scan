@@ -1,4 +1,4 @@
-FROM cgr.dev/jbishay.com/chainguard-base-fips:latest-dev
+FROM cgr.dev/jbishay.com/chainguard-base-fips:latest
 USER 0
 ENV TZ=US/Eastern
 RUN apk add --no-cache tzdata
