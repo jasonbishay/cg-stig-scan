@@ -37,7 +37,7 @@ jobs:
         run: |
           # run the target image
           docker run --name target -d stig-scan-example:latest-temp tail -f /dev/null
-          docker run -i --rm -u 0:0 --pid=host \
+          docker run --privileged -i --rm -u 0:0 --pid=host \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v $(pwd)/out:/out \
             --entrypoint sh \
