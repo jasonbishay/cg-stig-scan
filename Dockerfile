@@ -1,4 +1,4 @@
-FROM cgr.dev/jbishay.com/python-fips:latest
+FROM cgr.dev/jbishay.com/python-fips:3.13
 #USER 0
 #ENV TZ=US/Eastern
 #RUN apk add --no-cache tzdata
