@@ -26,13 +26,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}        
       - name: Build and Push container images
-        uses: docker/build-push-action@v6.14.0
+        uses: docker/build-push-action@v6.18.0
         id: build-and-push
         with:
           platforms: linux/amd64
           push: false
           load: true
-          tags: stig-scan-example:latest-temp     
+          tags: stig-scan-example:latest-temp
+          build-args: |
+            CHAINGUARD_ORG=jbishay.com               
       - name: Run STIG Scan
         run: |
           # run the target image
@@ -50,11 +52,13 @@ jobs:
           _END_DOCKER_RUN
           echo "Exit code: $?"
       - name: Rebuild and Push (after scan passes)
-        uses: docker/build-push-action@v6.14.0
+        uses: docker/build-push-action@v6.18.0
         with:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/jasonbishay/stig-example/stig-scan-example:latest
+          build-args: |
+            CHAINGUARD_ORG=jbishay.com           
       - name: Upload Scan Results
         uses: actions/upload-artifact@v4
         if: ${{ always() }}

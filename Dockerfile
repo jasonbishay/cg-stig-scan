@@ -1,4 +1,7 @@
-FROM cgr.dev/jbishay.com/python-fips:latest-dev
+ARG CHAINGUARD_ORG=""
+
+FROM cgr.dev/${CHAINGUARD_ORG}/python-fips:latest-dev
+
 USER 0
 ENV TZ=US/Eastern
 RUN apk add --no-cache tzdata
