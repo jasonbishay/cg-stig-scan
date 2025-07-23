@@ -56,9 +56,9 @@ chainctl iam identity create github [GITHUB-IDENTITY] \
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }} 
     ```
-8. Update the docker/build-push-action, update the CHAINGUARD_ORG build org to your Chainguard Org name.
+8. Update the Build Image docker/build-push-action, update the CHAINGUARD_ORG build org to your Chainguard Org name.
     ```
-      - name: Build and Push container images
+      - name: Build Image
         uses: docker/build-push-action@v6.18.0
         id: build-and-push
         with:
@@ -70,9 +70,20 @@ chainctl iam identity create github [GITHUB-IDENTITY] \
             CHAINGUARD_ORG=<YOUR CHAINGUARD ORG>  
     ```
     **NOTE:** Update this in both places where the docker/build-push-action is used.
+9. Update the Rebuild and Push step docker/build-push-action to specify the GitHub registry to push to:
+    ```
+      - name: Rebuild and Push (after scan passes)
+        uses: docker/build-push-action@v6.18.0
+        with:
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/<YOUR GITHUB REGISTRY>/stig-example/stig-scan-example:latest
+          build-args: |
+            CHAINGUARD_ORG=<YOUR CHAINGUARD ORG> 
+    ```
 
-9. Save/commit the .github/workflows/oscap.yaml file.
-10. Create a Dockerfile in the root of the repo, you can use the existing file in this repo or your own.  The important thing to note is that the STIG scan will only pass on a Chainguard FIPS image.
-11. Run the Action by selecting Actions->STIG Scan->Run Workflow
+10. Save/commit the .github/workflows/oscap.yaml file.
+11. Create a Dockerfile in the root of the repo, you can use the existing file in this repo or your own.  The important thing to note is that the STIG scan will only pass on a Chainguard FIPS image.
+12. Run the Action by selecting Actions->STIG Scan->Run Workflow
 
 
