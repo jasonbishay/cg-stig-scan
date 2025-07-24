@@ -85,5 +85,6 @@ chainctl iam identity create github [GITHUB-IDENTITY] \
 10. Save/commit the .github/workflows/oscap.yaml file.
 11. Create a Dockerfile in the root of the repo, you can use the existing file in this repo or your own.  The important thing to note is that the STIG scan will only pass on a Chainguard FIPS image.
 12. Run the Action by selecting Actions->STIG Scan->Run Workflow
+13. Once the Action has completed, select the Actions tab in the repo -> Select the run, scroll to the Artifacts section at the bottom of the page, you can download the "stig-scan-results" to view the results of the scan.
 
 
