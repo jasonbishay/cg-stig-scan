@@ -1,6 +1,6 @@
 ARG CHAINGUARD_ORG=""
 
-FROM cgr.dev/${CHAINGUARD_ORG}/python-fips:latest-dev
+FROM cgr.dev/${CHAINGUARD_ORG}/chainguard-base-fips:latest
 
 USER 0
 ENV TZ=US/Eastern
